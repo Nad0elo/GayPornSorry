@@ -1,0 +1,176 @@
+#include <conio.h>
+#include <stdio.h>
+#include <string.h>
+
+
+class Tea {
+	public:
+		char name[10];
+		char type[10];
+		int strength;
+		int volume;
+		float sugar;
+
+		int setCheck_Strength(int ss) {
+			if (ss > 0 && ss < 8) {
+				return strength = ss;
+			} else return false;
+		}
+		int getCheck_Strength() {
+			return strength;
+		}
+		int setCheck_Volume(int cc) {
+			if (cc > 99 && cc < 751) {
+				return volume = cc;
+			} else return false;
+		}
+		int getCheck_Volume() {
+			return volume;
+		}
+
+		void ch1() {
+			int ss;
+			printf("enter your name: ");
+			scanf("%s", &name[0]);
+			printf("enter type of tea: ");
+			scanf("%s", &type[0]);
+			STR:
+			printf("enter tea strength: ");
+			scanf("%i", &ss);
+			if (!setCheck_Strength(ss)) {
+				printf("incorrect, try agagin\n");
+				goto STR;
+			}
+		}
+
+		void ch2() {
+			int ss,cc;
+			printf("enter your name: ");
+			scanf("%s", &name[0]);
+			printf("enter type of tea: ");
+			scanf("%s", &type[0]);
+			STR:
+			printf("enter tea strength: ");
+			scanf("%i", &ss);
+			if (!setCheck_Strength(ss)) {
+				printf("incorrect, try agagin\n");
+				goto STR;
+			}
+			CUP:
+			printf("enter volume of cup: ");
+			scanf("%i", &cc);
+			if (!setCheck_Volume(cc)) {
+				printf("incorrect, try agagin\n");
+				goto CUP;
+			}
+		}
+
+		void ch3 () {
+			int i,ss,cc;
+			printf("enter your name: ");
+			scanf("%s", &name[0]);
+			printf("enter type of tea: ");
+			scanf("%s", &type[0]);
+			STR:
+			printf("enter tea strength: ");
+			scanf("%i", &ss);
+			if (!setCheck_Strength(ss)) {
+				printf("incorrect, try agagin\n");
+				goto STR;
+			}
+			CUP:
+			printf("enter volume of cup: ");
+			scanf("%i", &cc);
+			if (!setCheck_Volume(cc)) {
+				printf("incorrect, try agagin\n");
+				goto CUP;
+			}
+			printf("enter number of spoons of sugar: ");
+			scanf("%f", &sugar);
+		}
+
+		void out1() {
+			printf("%s here's you %s tea with a strength of %i\n", name, type, strength);
+		}
+
+		void out2() {
+			printf("%s here's you %s tea with a strength of %i and a cup volume of %i\n", name, type, strength, volume);
+		}
+
+		void out3() {
+			printf("%s here's you %s tea with a strength of %i, a cup volume of %i and %1.1f spoons of sugar\n", name, type, strength, volume, sugar);
+		}
+
+		friend bool operator == (Tea &left, Tea &right);
+};
+
+bool operator == (Tea &left, Tea &right) {
+	if (strcmp (left.type, right.type) == 0) {
+		return true;
+	}
+	return false;
+}
+
+int main() {
+	Tea tasty[100];
+	int i,n,ch;
+	do {
+		printf("1. enter name, type of tea, number of cups and tea strength\n");
+		printf("2. enter name, type of tea, number of cups, tea strength and volume of cup\n");
+		printf("3. enter name, type of tea, number of cups, tea strength, volume of cup and number of spoons of sugar\n");
+		printf("4. exit\n\n");
+		printf("enter your choice: ");
+		scanf("%i", &ch);
+		printf("\n");
+		if (ch == 1) {
+			printf("enter number of cups of tea: ");
+			scanf("%i", &n);
+			for (i = 0; i < n; i++) {
+				tasty[i].ch1();
+			}
+			for (i = 0; i < n; i++) {
+				tasty[i].out1();
+			}
+			for (i = 0; i < n; i++) {
+				for (int y = i+1; y < n; y++) {
+					if (tasty[i] == tasty[y]) {
+						printf("%s and %s drink: %s\n", tasty[i].name, tasty[y].name, tasty[y].type);
+                    }
+                }
+			}
+			printf("happy tea!!!\n\n");
+		}
+		if (ch == 2) {
+			printf("enter number of cups of tea: ");
+			scanf("%i", &n);
+			for (i = 0; i < n; i++) {
+				tasty[i].ch2();
+			}
+			for (i = 0; i < n; i++) {
+				tasty[i].out2();
+			}
+			if (tasty[i].type == tasty[i].type) {
+				printf("your type: %s\n", tasty[0].type);
+			}
+			printf("happy tea!!!\n\n");
+		}
+		if (ch == 3) {
+			printf("enter number of cups of tea: ");
+			scanf("%i", &n);
+			for (i = 1; i < n + 1; i++) {
+				tasty[i].ch3();
+			}
+			for (i = 1; i < n + 1; i++) {
+				tasty[i].out3();
+			}
+			if (tasty[i].type == tasty[i].type) {
+				printf("your type: %s\n", tasty[0].type);
+			}
+			printf("happy tea!!!\n\n");
+		}
+		if (ch == 4) {
+			return 0;
+		}
+	}while(1);
+	getch();
+}
